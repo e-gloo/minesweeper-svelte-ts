@@ -1,10 +1,9 @@
 <script lang="ts">
+  import Minesweeper from "./lib/Minesweeper.svelte";
 </script>
 
-<main>
-  <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
+<main class="w-full h-screen flex flex-col">
+  <Minesweeper />
 </main>
 
 <style>
