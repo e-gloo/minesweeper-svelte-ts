@@ -25,9 +25,10 @@
     if (!$start) {
       $start = true;
     }
+    const cell = board[y * width + x];
     board[y * width + x] = {
       ...board[y * width + x],
-      state: CellState.VISIBLE,
+      state: cell.state === CellState.HIDDEN ? CellState.VISIBLE : cell.state,
     };
     board = [...board];
   }
@@ -41,6 +42,8 @@
     } else if (cell.state === CellState.FLAG) {
       newState = CellState.QUESTION;
       $nbMines++;
+    } else if (cell.state === CellState.VISIBLE) {
+      newState = CellState.VISIBLE;
     }
     board[y * width + x] = {
       ...cell,
