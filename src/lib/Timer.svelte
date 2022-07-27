@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { timer, start } from "#store/MinesweeperStore";
+  import { timer, gameState, level } from "#store/MinesweeperStore";
+  import { GameState } from "#utils/constants";
 
   function displayTime(time: number) {
     return time < 10 ? `0${time}` : `${time}`;
@@ -8,15 +9,21 @@
   let displayedTimer = "00:00:00";
   let timeInterval = undefined;
 
-  start.subscribe((value: boolean) => {
+  gameState.subscribe((value: GameState) => {
     console.log(`starting with ${displayedTimer}`);
-    if (value === true) {
+    if (value === GameState.PLAYING) {
       timeInterval = setInterval(() => {
-        $timer++;
+        ++$timer;
       }, 1000);
     } else if (timeInterval !== undefined) {
       clearInterval(timeInterval);
+      timeInterval = undefined;
     }
+  });
+
+  level.subscribe((_: number) => {
+    $timer = 0;
+    $gameState = GameState.WAITING;
   });
 
   $: {

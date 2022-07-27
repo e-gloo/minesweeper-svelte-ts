@@ -24,9 +24,9 @@
     on:click={leftClick}
     on:contextmenu={rightClick}
 >
-    <div class="absolute inset-0 flex self-center items-center justify-center text-black text-xl">
+    <!-- <div class="absolute inset-0 flex self-center items-center justify-center text-black text-xl">
         <slot></slot>
-    </div>
+    </div> -->
     <img
         src={`assets/icons/${type}.svg`}
         class="w-full h-full"

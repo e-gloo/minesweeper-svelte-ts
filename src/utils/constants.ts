@@ -7,6 +7,15 @@ export const LEVEL_CONFIGS = {
 export enum CellState {
   HIDDEN,
   FLAG,
+  FLAG_WRONG,
+  CLICKED_MINE,
   QUESTION,
   VISIBLE,
+}
+
+export enum GameState {
+  WAITING,
+  PLAYING,
+  WIN,
+  LOST
 }
