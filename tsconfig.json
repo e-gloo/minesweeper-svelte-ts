@@ -7,6 +7,7 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
+      "#game/*": ["./src/game/*"],
       "#lib/*": ["./src/lib/*"],
       "#store/*": ["./src/store/*"],
       "#types/*": ["./src/types/*"],

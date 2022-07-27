@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [svelte()],
   resolve: {
     alias: {
+      "#game": path.resolve(__dirname, 'src/game'),
       "#lib": path.resolve(__dirname, 'src/lib'),
       "#store": path.resolve(__dirname, 'src/store'),
       "#types": path.resolve(__dirname, 'src/types'),
