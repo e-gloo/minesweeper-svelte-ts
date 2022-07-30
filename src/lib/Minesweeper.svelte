@@ -10,10 +10,8 @@
   })
 </script>
 
-<div class="w-full">
-  <Level />
-  <div>
-    <Stats />
-    <Board />
-  </div>
+<Level />
+<div>
+  <Stats />
+  <Board />
 </div>
