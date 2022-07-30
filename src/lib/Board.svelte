@@ -14,9 +14,6 @@
     size = LEVEL_CONFIGS[value].size;
   });
 
-  $: console.log($board);
-  
-
   function handleLeftClick(_: Event, y: number, x: number) {
     leftClick(y, x);
   }

@@ -4,6 +4,17 @@ export const LEVEL_CONFIGS = {
   3: { y: 16, x: 30, nbMines: 99, size: 8 },
 };
 
+export const NEIGHBORS = [
+  { y: -1, x: -1 },
+  { y: -1, x: 0 },
+  { y: -1, x: 1 },
+  { y: 0, x: -1 },
+  { y: 0, x: 1 },
+  { y: 1, x: -1 },
+  { y: 1, x: 0 },
+  { y: 1, x: 1 },
+];
+
 export enum CellState {
   HIDDEN,
   FLAG,
@@ -17,5 +28,5 @@ export enum GameState {
   WAITING,
   PLAYING,
   WIN,
-  LOST
+  LOST,
 }

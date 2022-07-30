@@ -7,7 +7,12 @@ import {
   gameState as gameStateStore,
 } from "#store/MinesweeperStore";
 import type TCell from "#types/TCell";
-import { LEVEL_CONFIGS, CellState, GameState } from "#utils/constants";
+import {
+  LEVEL_CONFIGS,
+  NEIGHBORS,
+  CellState,
+  GameState,
+} from "#utils/constants";
 import { randomNumber } from "#utils/helpers";
 
 function initBoard(level: number) {
@@ -32,25 +37,15 @@ function setValues() {
   const board = get(boardStore);
   const width = LEVEL_CONFIGS[get(levelStore)].x;
   const height = LEVEL_CONFIGS[get(levelStore)].y;
-  const neigboorCells = [
-    { y: -1, x: -1 },
-    { y: -1, x: 0 },
-    { y: -1, x: 1 },
-    { y: 0, x: -1 },
-    { y: 0, x: 1 },
-    { y: 1, x: -1 },
-    { y: 1, x: 0 },
-    { y: 1, x: 1 },
-  ];
   for (let y = 0; y < height; ++y) {
     for (let x = 0; x < width; ++x) {
-      for (const neigboor of neigboorCells) {
-        const tempCell = (y + neigboor.y) * width + x + neigboor.x;
+      for (const neighbor of NEIGHBORS) {
+        const tempCell = (y + neighbor.y) * width + x + neighbor.x;
         if (
-          y + neigboor.y >= 0 &&
-          y + neigboor.y < height &&
-          x + neigboor.x >= 0 &&
-          x + neigboor.x < width &&
+          y + neighbor.y >= 0 &&
+          y + neighbor.y < height &&
+          x + neighbor.x >= 0 &&
+          x + neighbor.x < width &&
           board[tempCell].isMine === true
         ) {
           ++board[y * width + x].value;
@@ -59,20 +54,6 @@ function setValues() {
     }
   }
 
-  // for (let cell = 0; cell < board.length; ++cell) {
-  //   let nbMinesNeighbour = 0;
-  //   const x = cell % width;
-  //   const y = cell / height;
-  //   for (let ty = -1; ty <= 1; ++ty) {
-  //     for (let tx = -1; tx <= 1; ++tx) {
-  //       const tmpX = (cell + tx) % width;
-  //       const tmpY = (cell + ty) / width;
-  //       if (x === tmpX && y === tmpY) {
-  //         continue;
-  //       }
-  //     }
-  //   }
-  //   }
   boardStore.set([...board]);
 }
 
@@ -84,8 +65,9 @@ function placeMines(y: number, x: number) {
   );
   let nbMines = get(nbMinesStore);
   while (nbMines > 0) {
-    const randomIndex = randomNumber(0, possibleCells.length);
-    board[randomIndex].isMine = true;
+    const randomIndex = randomNumber(0, possibleCells.length - 1);
+    console.log({ len: possibleCells.length, randomIndex });
+    possibleCells[randomIndex].isMine = true;
     possibleCells.splice(randomIndex, 1);
     --nbMines;
   }
@@ -95,8 +77,9 @@ function placeMines(y: number, x: number) {
 
 function checkWin() {
   const board = get(boardStore);
+  const level = get(levelStore);
   const nbCellRevealed = get(nbCellRevealedStore);
-  if (nbCellRevealed === board.length - get(nbMinesStore)) {
+  if (nbCellRevealed === board.length - LEVEL_CONFIGS[level].nbMines) {
     gameStateStore.set(GameState.WIN);
   }
 }
@@ -109,24 +92,45 @@ export function leftClick(y: number, x: number) {
   if (!canClick()) {
     return;
   }
-  const board = get(boardStore);
-  const width = LEVEL_CONFIGS[get(levelStore)].x;
-  const cell = board[y * width + x];
-  let newState = cell.state;
-  if (cell.isMine === true && cell.state === CellState.HIDDEN) {
-    newState = CellState.CLICKED_MINE;
-    gameStateStore.set(GameState.LOST);
-  } else if (cell.state === CellState.HIDDEN) {
-    newState = CellState.VISIBLE;
-    nbCellRevealedStore.set(get(nbCellRevealedStore) + 1);
-    checkWin();
-  }
-  board[y * width + x] = { ...board[y * width + x], state: newState };
-  boardStore.set([...board]);
+
   if (get(gameStateStore) === GameState.WAITING) {
     gameStateStore.set(GameState.PLAYING);
     placeMines(y, x);
     setValues();
+  }
+
+  let board = get(boardStore);
+  const width = LEVEL_CONFIGS[get(levelStore)].x;
+  const height = LEVEL_CONFIGS[get(levelStore)].y;
+  const cell = board[y * width + x];
+  let newState = cell.state;
+
+  if (cell.isMine === true && cell.state === CellState.HIDDEN) {
+    newState = CellState.CLICKED_MINE;
+    gameStateStore.set(GameState.LOST);
+    board[y * width + x] = { ...board[y * width + x], state: newState };
+    boardStore.set([...board]);
+  } else if (cell.state === CellState.HIDDEN) {
+    newState = CellState.VISIBLE;
+    nbCellRevealedStore.set(get(nbCellRevealedStore) + 1);
+    board[y * width + x] = { ...board[y * width + x], state: newState };
+    boardStore.set([...board]);
+    if (cell.value === 0) {
+      for (const neighbor of NEIGHBORS) {
+        const tempCell = (y + neighbor.y) * width + x + neighbor.x;
+        if (
+          y + neighbor.y >= 0 &&
+          y + neighbor.y < height &&
+          x + neighbor.x >= 0 &&
+          x + neighbor.x < width &&
+          board[tempCell].state === CellState.HIDDEN
+        ) {
+          leftClick(y + neighbor.y, x + neighbor.x);
+          board = get(boardStore);
+        }
+      }
+    }
+    checkWin();
   }
 }
 

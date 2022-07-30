@@ -10,8 +10,8 @@
   let timeInterval = undefined;
 
   gameState.subscribe((value: GameState) => {
-    console.log(`starting with ${displayedTimer}`);
     if (value === GameState.PLAYING) {
+      console.log(`starting with ${displayedTimer}`);
       timeInterval = setInterval(() => {
         ++$timer;
       }, 1000);
