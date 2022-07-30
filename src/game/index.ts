@@ -5,15 +5,15 @@ import {
   nbMines as nbMinesStore,
   nbCellRevealed as nbCellRevealedStore,
   gameState as gameStateStore,
-} from "#store/MinesweeperStore";
-import type TCell from "#types/TCell";
+} from "@/store/MinesweeperStore";
+import type TCell from "@/types/TCell";
 import {
   LEVEL_CONFIGS,
   NEIGHBORS,
   CellState,
   GameState,
-} from "#utils/constants";
-import { randomNumber } from "#utils/helpers";
+} from "@/utils/constants";
+import { randomNumber } from "@/utils/helpers";
 
 function initBoard(level: number) {
   const board = [] as TCell[];
@@ -66,7 +66,6 @@ function placeMines(y: number, x: number) {
   let nbMines = get(nbMinesStore);
   while (nbMines > 0) {
     const randomIndex = randomNumber(0, possibleCells.length - 1);
-    console.log({ len: possibleCells.length, randomIndex });
     possibleCells[randomIndex].isMine = true;
     possibleCells.splice(randomIndex, 1);
     --nbMines;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { nbMines } from "#store/MinesweeperStore";
+  import { nbMines } from "@/store/MinesweeperStore";
 </script>
 
 <div class="flex">

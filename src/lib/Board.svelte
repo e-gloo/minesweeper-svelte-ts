@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Cell from "#lib/Cell.svelte";
-  import { board, level } from "#store/MinesweeperStore";
-  import { CellState, LEVEL_CONFIGS } from "#utils/constants";
-  import { leftClick, rightClick } from "#game/index";
+  import Cell from "@/lib/Cell.svelte";
+  import { board, level } from "@/store/MinesweeperStore";
+  import { CellState, LEVEL_CONFIGS } from "@/utils/constants";
+  import { leftClick, rightClick } from "@/game";
 
   let height = LEVEL_CONFIGS[1].y;
   let width = LEVEL_CONFIGS[1].x;

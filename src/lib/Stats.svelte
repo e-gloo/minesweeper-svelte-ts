@@ -1,6 +1,6 @@
 <script lang="ts">
-  import MineReminding from "#lib/MineReminding.svelte";
-  import Timer from "#lib/Timer.svelte";
+  import MineReminding from "@/lib/MineReminding.svelte";
+  import Timer from "@/lib/Timer.svelte";
   
   let d = false;
 </script>

@@ -1,4 +1,4 @@
-import path from 'path';
+import path from "path";
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 
@@ -7,11 +7,7 @@ export default defineConfig({
   plugins: [svelte()],
   resolve: {
     alias: {
-      "#game": path.resolve(__dirname, 'src/game'),
-      "#lib": path.resolve(__dirname, 'src/lib'),
-      "#store": path.resolve(__dirname, 'src/store'),
-      "#types": path.resolve(__dirname, 'src/types'),
-      "#utils": path.resolve(__dirname, 'src/utils'),
+      "@": path.resolve(__dirname, "src"),
     },
   },
 });

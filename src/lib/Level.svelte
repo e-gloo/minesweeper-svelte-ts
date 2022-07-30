@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {level} from '#store/MinesweeperStore'
+  import {level} from '@/store/MinesweeperStore'
 </script>
 
 <div class="flex justify-center">

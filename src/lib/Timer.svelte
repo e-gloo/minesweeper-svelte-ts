@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { timer, gameState, level } from "#store/MinesweeperStore";
-  import { GameState } from "#utils/constants";
+  import { timer, gameState, level } from "@/store/MinesweeperStore";
+  import { GameState } from "@/utils/constants";
 
   function displayTime(time: number) {
     return time < 10 ? `0${time}` : `${time}`;

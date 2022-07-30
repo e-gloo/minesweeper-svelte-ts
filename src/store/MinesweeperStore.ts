@@ -1,7 +1,7 @@
 import { writable } from "svelte/store";
 import { tweened } from "svelte/motion";
-import type TCell from "#types/TCell";
-import { GameState } from "#utils/constants";
+import type TCell from "@/types/TCell";
+import { GameState } from "@/utils/constants";
 
 export const board = writable([] as TCell[]);
 
