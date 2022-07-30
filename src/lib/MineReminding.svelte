@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { nbMines } from "@/store/MinesweeperStore";
+  import { gameInstance } from "@/store/MinesweeperStore";
 </script>
 
 <div class="flex">
-  {$nbMines}
+  {$gameInstance.nbMines}
   <img
     src="https://static.thenounproject.com/png/965385-200.png"
     alt="Mine reminding"

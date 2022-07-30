@@ -1,8 +1,10 @@
 export const LEVEL_CONFIGS = {
-  1: { y: 9, x: 9, nbMines: 10, size: 12 },
-  2: { y: 16, x: 16, nbMines: 40, size: 12 },
-  3: { y: 16, x: 30, nbMines: 99, size: 12 },
+  1: { y: 9, x: 9, nbMines: 10 },
+  2: { y: 16, x: 16, nbMines: 40 },
+  3: { y: 16, x: 30, nbMines: 99 },
 };
+
+export const CELL_SIZE = 12;
 
 export const NEIGHBORS = [
   { y: -1, x: -1 },
